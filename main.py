@@ -24,9 +24,9 @@ from PyPDF2 import PdfReader
 def generate_response(file, openai_api_key, query):
     #format file
     reader = PdfReader(file)
-    formatted_document = []
-    for page in reader.pages:
-        formatted_document.append(page.extract_text())
+    formatted_document = [
+        page.extract_text() for page in reader.pages if page.extract_text()
+    ]
     #split file
     text_splitter = CharacterTextSplitter(
         chunk_size=1000,
