@@ -5,7 +5,7 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import streamlit as st
 import chromadb
 import sqlite3
-from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
@@ -42,7 +42,7 @@ def generate_response(file, openai_api_key, query):
     
     #create retrieval chain
     retrieval_chain = RetrievalQA.from_chain_type(
-        llm=OpenAI(temperature=0, openai_api_key=openai_api_key),
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key=openai_api_key),
         chain_type="stuff",
         retriever=store.as_retriever()
     )
